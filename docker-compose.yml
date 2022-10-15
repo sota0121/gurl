@@ -1,0 +1,7 @@
+version: "3.7"
+
+services:
+  cmd:
+    build:
+      context: .
+      dockerfile: Dockerfile
