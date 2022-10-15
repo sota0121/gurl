@@ -10,7 +10,6 @@ GO_TOOL		= $(GO) tool
 GO_VET		= $(GO) vet
 GO_FMT		= $(GO) fmt
 GO_GENERATE	= $(GO) generate
-GOLINT		= golint
 
 MAIN_GO		= cmd/main.go
 BIN_NAME	= bin/gurl
@@ -34,8 +33,6 @@ test:
 	$(GO_TOOL) cover -html=$(COVER_FILE) -o $(COVER_HTML)
 
 # Lint
-lint:
-	$(GOLINT) -set_exit_status ./...
 vet:
 	$(GO_VET) ./...
 fmt:
