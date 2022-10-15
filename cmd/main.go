@@ -4,7 +4,15 @@ import (
 	"fmt"
 )
 
+func cmdName() string {
+	return "gurl"
+}
+
 func main() {
+	cmdName := cmdName()
+	fmt.Println("--------------------------------")
+	fmt.Println("This is ", cmdName, " command")
+	fmt.Println("--------------------------------")
 	fmt.Println(`Usage of gurl:
 	-d string
 		  HTTP request body
