@@ -270,9 +270,9 @@ func GetOptWithIndex(index int) (Opt, error) {
 }
 
 // GetOptWithName returns the option with the given name.
-func GetOptWithName(name string) (Opt, error) {
+func GetOptWithName(name OptNameType) (Opt, error) {
 	for _, opt := range options {
-		if opt.Name.String() == name {
+		if opt.Name == name {
 			return opt, nil
 		}
 	}
