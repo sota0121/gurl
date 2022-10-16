@@ -3,17 +3,16 @@ package cmd
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGurlCommand_Execute(t *testing.T) {
 	c := NewCommand()
-	assert.Equal(t, "dummy", c.ctx)
-	assert.Equal(t, "dummy", c.cfg)
-	assert.Equal(t, "dummy", c.client)
-	assert.Equal(t, "Usage: gurl [options...] <url>", c.usage, "usage should be equal")
+	require.Equal(t, "dummy", c.ctx)
+	require.Equal(t, "dummy", c.cfg)
+	require.Equal(t, "dummy", c.client)
+	require.Equal(t, "Usage: gurl [options...] <url>", c.usage, "usage should be equal")
 
-	if err := c.Execute(); err != nil {
-		assert.Fail(t, err.Error(), "GurlCommand.Execute() should not return error")
-	}
+	err := c.Execute()
+	require.NoError(t, err)
 }
