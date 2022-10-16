@@ -11,7 +11,7 @@ GO_VET		= $(GO) vet
 GO_FMT		= $(GO) fmt
 GO_GENERATE	= $(GO) generate
 
-MAIN_GO		= cmd/main.go
+MAIN_GO		= main.go
 BIN_NAME	= bin/gurl
 OUT_DIR		= out/
 COVER_DIR	= $(OUT_DIR)cover/
@@ -43,4 +43,4 @@ run:
 	$(GO_RUN) $(MAIN_GO)
 
 build:
-	go build -o $(OUT_DIR)$(BIN_NAME) $(MAIN_GO)
+	$(GO_BUILD) -o $(OUT_DIR)$(BIN_NAME) $(MAIN_GO)
