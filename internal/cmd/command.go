@@ -50,5 +50,10 @@ func (c *GurlCommand) Execute() error {
 // NewCommand creates a new command.
 func NewCommand() *GurlCommand {
 	ParserInit()
-	return &GurlCommand{usage: "Usage: gurl [options...] <url>"}
+	return &GurlCommand{
+		ctx:    "dummy",
+		cfg:    "dummy",
+		client: "dummy",
+		usage:  "Usage: gurl [options...] <url>",
+	}
 }
