@@ -15,21 +15,40 @@ type GurlCommand struct {
 
 func (c *GurlCommand) Execute() error {
 	fmt.Println(c.usage)
-	fmt.Println("Execute called on GurlCommand")
-	fmt.Println("-----------------------------")
-	parser := NewArgParser()
-	for i := 0; i < parser.GetOptSize(); i++ {
-		opt, err := parser.GetOptWithIndex(i)
+	for i := 0; i < GetOptSize(); i++ {
+		opt, err := GetOptWithIndex(i)
 		if err != nil {
 			return err
 		}
 		fmt.Println(opt.GetLineToPrint())
+		prefix := "value: "
+		switch opt.GetType() {
+		case String:
+			str, err := opt.String()
+			if err != nil {
+				return err
+			}
+			fmt.Println(prefix, str)
+		case Bool:
+			b, err := opt.Bool()
+			if err != nil {
+				return err
+			}
+			fmt.Println(prefix, b)
+		case Int:
+			i, err := opt.Int()
+			if err != nil {
+				return err
+			}
+			fmt.Println(prefix, i)
+		}
+		fmt.Println()
 	}
 	return nil
 }
 
 // NewCommand creates a new command.
 func NewCommand() *GurlCommand {
-	// TODO: parse args
+	ParserInit()
 	return &GurlCommand{usage: "Usage: gurl [options...] <url>"}
 }

@@ -12,6 +12,11 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// var cmdVar string
+	// flag.StringVar(&cmdVar, "cmd", "default", "cmd desu")
+	// flag.Parse()
+	// fmt.Println("cmdVar is : ", cmdVar)
+
 	// cmdName := cmdName()
 	// fmt.Println("--------------------------------")
 	// fmt.Println("This is ", cmdName, " command")
