@@ -24,24 +24,21 @@ func testNewOptValue(t *testing.T) {
 	v := NewOptValue(String)
 	v.strValue = "test"
 	require.Equal(t, String, v.GetType())
-	s, err := v.String()
-	require.NoError(t, err)
+	s := v.String()
 	require.Equal(t, "test", s)
 
 	// bool value pattern
 	v = NewOptValue(Bool)
 	v.boolValue = true
 	require.Equal(t, Bool, v.GetType())
-	b, err := v.Bool()
-	require.NoError(t, err)
+	b := v.Bool()
 	require.Equal(t, true, b)
 
 	// int value pattern
 	v = NewOptValue(Int)
 	v.intValue = 123
 	require.Equal(t, Int, v.GetType())
-	i, err := v.Int()
-	require.NoError(t, err)
+	i := v.Int()
 	require.Equal(t, 123, i)
 }
 

@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 )
 
 // GurlCommand is the main command.
 type GurlCommand struct {
-	ctx string // dummy field
-	cfg string // dummy field
+	ctx *ReqContext
+	cfg *CmdConfig
 
 	client string // dummy field
 	usage  string // dummy field
@@ -24,22 +25,13 @@ func (c *GurlCommand) Execute() error {
 		prefix := "value: "
 		switch opt.GetType() {
 		case String:
-			str, err := opt.String()
-			if err != nil {
-				return err
-			}
+			str := opt.String()
 			fmt.Println(prefix, str)
 		case Bool:
-			b, err := opt.Bool()
-			if err != nil {
-				return err
-			}
+			b := opt.Bool()
 			fmt.Println(prefix, b)
 		case Int:
-			i, err := opt.Int()
-			if err != nil {
-				return err
-			}
+			i := opt.Int()
 			fmt.Println(prefix, i)
 		}
 		fmt.Println()
@@ -49,10 +41,102 @@ func (c *GurlCommand) Execute() error {
 
 // NewCommand creates a new command.
 func NewCommand() *GurlCommand {
+	// Initialize Command Line Arguments
 	ParserInit()
+
+	// Get Options for Request Context
+	optRequest, err := GetOptWithName(request)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optForm, err := GetOptWithName(form)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optData, err := GetOptWithName(data)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optUploadFile, err := GetOptWithName(uploadFile)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optUser, err := GetOptWithName(user)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optUserAgent, err := GetOptWithName(userAgent)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	// Get Options for Command Config
+	optHelp, err := GetOptWithName(help)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optFail, err := GetOptWithName(fail)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optInclude, err := GetOptWithName(include)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optOutput, err := GetOptWithName(output)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optRemoteName, err := GetOptWithName(remoteName)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optSilent, err := GetOptWithName(silent)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optVerbose, err := GetOptWithName(verbose)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	optVersion, err := GetOptWithName(version)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
 	return &GurlCommand{
-		ctx:    "dummy",
-		cfg:    "dummy",
+		ctx: NewReqContext(
+			optRequest.Value.String(),
+			optForm.Value.String(),
+			optData.Value.String(),
+			optUploadFile.Value.String(),
+			optUser.Value.String(),
+			optUserAgent.Value.String(),
+		),
+		cfg: NewCmdConfig(
+			optHelp.Value.Bool(),
+			optFail.Value.Bool(),
+			optInclude.Value.Bool(),
+			optRemoteName.Value.Bool(),
+			optSilent.Value.Bool(),
+			optVerbose.Value.Bool(),
+			optVersion.Value.Bool(),
+			optOutput.Value.String(),
+		),
 		client: "dummy",
 		usage:  "Usage: gurl [options...] <url>",
 	}

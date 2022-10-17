@@ -52,16 +52,16 @@ func (v OptValue) GetType() ArgValueType {
 	return v.typeOfOpt
 }
 
-func (v OptValue) String() (string, error) {
-	return v.strValue, nil
+func (v OptValue) String() string {
+	return v.strValue
 }
 
-func (v OptValue) Bool() (bool, error) {
-	return v.boolValue, nil
+func (v OptValue) Bool() bool {
+	return v.boolValue
 }
 
-func (v OptValue) Int() (int, error) {
-	return v.intValue, nil
+func (v OptValue) Int() int {
+	return v.intValue
 }
 
 // Opt is the container for the option.
@@ -87,15 +87,15 @@ func (o Opt) GetType() ArgValueType {
 	return o.Value.GetType()
 }
 
-func (o Opt) String() (string, error) {
+func (o Opt) String() string {
 	return o.Value.String()
 }
 
-func (o Opt) Bool() (bool, error) {
+func (o Opt) Bool() bool {
 	return o.Value.Bool()
 }
 
-func (o Opt) Int() (int, error) {
+func (o Opt) Int() int {
 	return o.Value.Int()
 }
 
