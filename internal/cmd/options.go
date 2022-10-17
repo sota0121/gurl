@@ -112,6 +112,8 @@ func (o OptNameType) String() string {
 
 // Option Names definition
 const (
+	request    OptNameType = "request"
+	form       OptNameType = "form"
 	data       OptNameType = "data"
 	fail       OptNameType = "fail"
 	help       OptNameType = "help"
@@ -128,6 +130,24 @@ const (
 
 // options is the slice of the options.
 var options = []Opt{
+	{
+		Name:      request,
+		ShortHand: "-X",
+		Help:      "Specify request method to use",
+		Usage:     "--request <method>",
+		Required:  false,
+		Supported: true,
+		Value:     *NewOptValue(String),
+	},
+	{
+		Name:      form,
+		ShortHand: "-F",
+		Help:      "Specify multipart MIME data",
+		Usage:     "--form <name=content>",
+		Required:  false,
+		Supported: true,
+		Value:     *NewOptValue(String),
+	},
 	{
 		Name:      data,
 		ShortHand: "-d",
@@ -179,7 +199,7 @@ var options = []Opt{
 		Help:      "Write output to a file named as the remote file",
 		Usage:     "--remote-name",
 		Required:  false,
-		Supported: true,
+		Supported: false,
 		Value:     *NewOptValue(Bool),
 	},
 	{
@@ -197,7 +217,7 @@ var options = []Opt{
 		Help:      "Transfer local FILE to destination",
 		Usage:     "--upload-file <file>",
 		Required:  false,
-		Supported: true,
+		Supported: false,
 		Value:     *NewOptValue(String),
 	},
 	{
@@ -259,6 +279,17 @@ func ParserInit() {
 // GetOptSize returns the number of options.
 func GetOptSize() int {
 	return len(options)
+}
+
+// GetSupportedOptSize returns the number of supported options.
+func GetSupportedOptSize() int {
+	size := 0
+	for _, opt := range options {
+		if opt.Supported {
+			size++
+		}
+	}
+	return size
 }
 
 // GetOptWithIndex returns the option at the given index.

@@ -92,4 +92,13 @@ func testConstantOptionsAccess(t *testing.T) {
 	}
 	_, err = GetOptWithName("not-exist")
 	require.Error(t, err)
+
+	supportedOptSize := GetSupportedOptSize()
+	supportedOptions := []Opt{}
+	for _, opt := range options {
+		if opt.Supported {
+			supportedOptions = append(supportedOptions, opt)
+		}
+	}
+	require.Equal(t, len(supportedOptions), supportedOptSize)
 }
