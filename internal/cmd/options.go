@@ -260,6 +260,7 @@ var options = []Opt{
 
 // Init initializes the parser.
 func ParserInit() {
+	// Bind the optional arguments to the options (variables).
 	for i, opt := range options {
 		// NOTE: We use the index of the option in the slice as the flag name.
 		// If we don't access the flag by index, the flag value will not be updated.

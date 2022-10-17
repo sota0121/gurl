@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"flag"
 	"fmt"
 	"log"
 )
@@ -12,6 +13,7 @@ type GurlCommand struct {
 
 	client string // dummy field
 	usage  string // dummy field
+	url    string
 }
 
 func (c *GurlCommand) Execute() error {
@@ -41,7 +43,7 @@ func (c *GurlCommand) Execute() error {
 
 // NewCommand creates a new command.
 func NewCommand() *GurlCommand {
-	// Initialize Command Line Arguments
+	// Initialize Flag Command Line Arguments
 	ParserInit()
 
 	// Get Options for Request Context
@@ -118,6 +120,14 @@ func NewCommand() *GurlCommand {
 		return nil
 	}
 
+	// Get Positional Arguments
+	positionalArgs := flag.Args()
+	if len(positionalArgs) == 0 {
+		log.Fatal("no url specified")
+		return nil
+	}
+	url := positionalArgs[0]
+
 	return &GurlCommand{
 		ctx: NewReqContext(
 			optRequest.Value.String(),
@@ -139,5 +149,6 @@ func NewCommand() *GurlCommand {
 		),
 		client: "dummy",
 		usage:  "Usage: gurl [options...] <url>",
+		url:    url,
 	}
 }
