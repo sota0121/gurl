@@ -1,4 +1,4 @@
-package cmd
+package feature
 
 // CmdConfig is the configuration of the command.
 type CmdConfig struct {

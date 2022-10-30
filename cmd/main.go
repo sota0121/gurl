@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/sota0121/gurl/internal/cmd"
+	"github.com/sota0121/gurl/cmd/feature"
 )
 
 func main() {
-	command := cmd.NewCommand()
+	command := feature.NewCommand()
 	if err := command.Execute(); err != nil {
 		fmt.Println(err)
 	}

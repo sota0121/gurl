@@ -1,4 +1,4 @@
-package cmd
+package feature
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Test Suite for the package cmd.OptValue
+// Test Suite for the package feature.OptValue
 func TestOptValue(t *testing.T) {
 	testMap := map[string]func(t *testing.T){
 		"New OptValue Instance": testNewOptValue,
@@ -42,7 +42,7 @@ func testNewOptValue(t *testing.T) {
 	require.Equal(t, 123, i)
 }
 
-// Test Suite for the package cmd.Opt
+// Test Suite for the package feature.Opt
 func TestOpt(t *testing.T) {
 	testMap := map[string]func(t *testing.T){
 		"New Opt Instance":        testNewOpt,
