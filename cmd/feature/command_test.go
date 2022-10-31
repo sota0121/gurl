@@ -76,7 +76,7 @@ func setCommandlineOptions(t *testing.T, opts []flag.Value) {
 	t.Helper() // mark this function as a helper function
 
 	for _, opt := range opts {
-		switch opt.(type) {
+		switch valuetype := opt.(type) {
 		case *IntOpt:
 			flag.CommandLine.Set(opt.(*IntOpt).name, opt.(*IntOpt).String())
 		case *StringOpt:
@@ -84,12 +84,17 @@ func setCommandlineOptions(t *testing.T, opts []flag.Value) {
 		case *BoolOpt:
 			flag.CommandLine.Set(opt.(*BoolOpt).name, opt.(*BoolOpt).String())
 		default:
-			t.Fatalf("unknown option type: %T", opt)
+			t.Fatalf("unknown option type: %T", valuetype)
 		}
 	}
 }
 
 func TestNewCommand(t *testing.T) {
+	// [Essence] At unittest, we should use the virtual commandline arguments
+	// instead of the real commandline arguments.
+	// [Note] The commandline arguments are stored in the os.Args.
+	// [Note] The commandline options are stored with the flag.CommandLine.Set()
+	// flag.CommandLine.Set() has to be called before flag.Parse()
 	setCommandlineArgs(t, progname, []string{"GET", "http://example.com"})
 	testoptions := make([]flag.Value, 0, 3)
 	testoptions = append(testoptions, &StringOpt{value: "hello", name: "data"})
