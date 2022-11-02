@@ -11,33 +11,55 @@ type GurlCommand struct {
 	ctx *ReqContext
 	cfg *CmdConfig
 
-	client string // dummy field
+	client *GurlClient
 	usage  string // dummy field
 	url    string
 }
 
 func (c *GurlCommand) Execute() error {
-	fmt.Println(c.usage)
-	for i := 0; i < GetOptSize(); i++ {
-		opt, err := GetOptWithIndex(i)
-		if err != nil {
-			return err
-		}
-		fmt.Println(opt.GetLineToPrint())
-		prefix := "value: "
-		switch opt.GetType() {
-		case String:
-			str := opt.String()
-			fmt.Println(prefix, str)
-		case Bool:
-			b := opt.Bool()
-			fmt.Println(prefix, b)
-		case Int:
-			i := opt.Int()
-			fmt.Println(prefix, i)
-		}
-		fmt.Println()
+	// Print Help
+	if c.cfg.showHelp {
+		fmt.Println(c.usage)
+		return nil
 	}
+
+	// Print Option (for Debug)
+	// for i := 0; i < GetOptSize(); i++ {
+	// 	opt, err := GetOptWithIndex(i)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	fmt.Println(opt.GetLineToPrint())
+	// 	prefix := "value: "
+	// 	switch opt.GetType() {
+	// 	case String:
+	// 		str := opt.String()
+	// 		fmt.Println(prefix, str)
+	// 	case Bool:
+	// 		b := opt.Bool()
+	// 		fmt.Println(prefix, b)
+	// 	case Int:
+	// 		i := opt.Int()
+	// 		fmt.Println(prefix, i)
+	// 	}
+	// 	fmt.Println()
+	// }
+
+	// Request
+	resp, err := c.client.Request(c.ctx, c.url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Print Response
+	fmt.Println(resp.Status)
+	for k, v := range resp.Header {
+		fmt.Println(k, v)
+	}
+	fmt.Println()
+	fmt.Println(resp.Body)
+
 	return nil
 }
 
@@ -147,7 +169,7 @@ func NewCommand() *GurlCommand {
 			optVersion.Value.Bool(),
 			optOutput.Value.String(),
 		),
-		client: "dummy",
+		client: NewGurlClient(),
 		usage:  "Usage: gurl [options...] <url>",
 		url:    url,
 	}

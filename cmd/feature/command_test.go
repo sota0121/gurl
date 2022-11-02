@@ -102,8 +102,8 @@ func TestNewCommand(t *testing.T) {
 	setCommandlineOptions(t, testoptions)
 
 	c := NewCommand()
-	require.Equal(t, ReqContext{method: http.MethodGet}, *c.ctx)
+	require.Equal(t, ReqContext{Method: http.MethodGet}, *c.ctx)
 	require.Equal(t, CmdConfig{}, *c.cfg)
-	require.Equal(t, "dummy", c.client)
+	require.Equal(t, GurlClient{}, *c.client)
 	require.Equal(t, "Usage: gurl [options...] <url>", c.usage, "usage should be equal")
 }

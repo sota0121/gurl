@@ -7,7 +7,7 @@ import (
 // ReqContext is the http request context of the command.
 type ReqContext struct {
 	// method is the http request method corresponding to -X or --request.
-	method string
+	Method string
 	// form is the http request form corresponding to -F or --form.
 	form string
 	// data is the data of the request corresponding to -d or --data.
@@ -39,7 +39,7 @@ func NewReqContext(
 	}
 
 	return &ReqContext{
-		method:       optRequest,
+		Method:       optRequest,
 		form:         optForm,
 		data:         optData,
 		fileToUpload: optUploadFile,

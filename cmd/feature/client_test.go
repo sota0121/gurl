@@ -1,11 +1,11 @@
-package proxy
+package feature
 
 import (
 	"testing"
 )
 
 func TestHttpClient_Connect(t *testing.T) {
-	c := NewHttpClient()
+	c := NewGurlClient()
 	if c.IsConnected() {
 		t.Errorf("HttpClient.IsConnected() = %v, want %v", c.IsConnected(), false)
 	}
@@ -18,7 +18,7 @@ func TestHttpClient_Connect(t *testing.T) {
 }
 
 func TestHttpClient_IsConnected(t *testing.T) {
-	c := NewHttpClient()
+	c := NewGurlClient()
 	if c.IsConnected() {
 		t.Errorf("HttpClient.IsConnected() = %v, want %v", c.IsConnected(), false)
 	}
