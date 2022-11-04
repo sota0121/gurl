@@ -12,7 +12,7 @@ type GurlCommand struct {
 	cfg *CmdConfig
 
 	client *GurlClient
-	usage  string // dummy field
+	usage  string
 	url    string
 }
 
