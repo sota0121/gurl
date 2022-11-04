@@ -23,28 +23,6 @@ func (c *GurlCommand) Execute() error {
 		return nil
 	}
 
-	// Print Option (for Debug)
-	// for i := 0; i < GetOptSize(); i++ {
-	// 	opt, err := GetOptWithIndex(i)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	fmt.Println(opt.GetLineToPrint())
-	// 	prefix := "value: "
-	// 	switch opt.GetType() {
-	// 	case String:
-	// 		str := opt.String()
-	// 		fmt.Println(prefix, str)
-	// 	case Bool:
-	// 		b := opt.Bool()
-	// 		fmt.Println(prefix, b)
-	// 	case Int:
-	// 		i := opt.Int()
-	// 		fmt.Println(prefix, i)
-	// 	}
-	// 	fmt.Println()
-	// }
-
 	// Request
 	resp, err := c.client.Request(c.ctx, c.url)
 	if err != nil {
@@ -142,14 +120,6 @@ func NewCommand() *GurlCommand {
 		return nil
 	}
 
-	// Get Positional Arguments
-	positionalArgs := flag.Args()
-	if len(positionalArgs) == 0 {
-		log.Fatal("no url specified")
-		return nil
-	}
-	url := positionalArgs[0]
-
 	// Create Request Context
 	ctx := NewReqContext(
 		optRequest.Value.String(),
@@ -183,6 +153,20 @@ func NewCommand() *GurlCommand {
 	if client == nil {
 		log.Fatal("failed to create gurl client")
 		return nil
+	}
+
+	// Get Positional Arguments
+	url := ""
+	// -> Are Positional Arguments Needed?
+	needURL := !optHelp.Value.Bool() && !optVersion.Value.Bool()
+	// -> Get Positional Arguments If Needed
+	if needURL {
+		positionalArgs := flag.Args()
+		if len(positionalArgs) == 0 {
+			log.Fatal("missing url")
+			return nil
+		}
+		url = positionalArgs[0]
 	}
 
 	return &GurlCommand{
