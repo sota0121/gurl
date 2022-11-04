@@ -69,74 +69,74 @@ func NewCommand() *GurlCommand {
 	ParserInit()
 
 	// Get Options for Request Context
-	optRequest, err := GetOptWithName(request)
+	optRequest, err := GetOptWithName(request.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optForm, err := GetOptWithName(form)
+	optForm, err := GetOptWithName(form.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optData, err := GetOptWithName(data)
+	optData, err := GetOptWithName(data.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optUploadFile, err := GetOptWithName(uploadFile)
+	optUploadFile, err := GetOptWithName(uploadFile.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optUser, err := GetOptWithName(user)
+	optUser, err := GetOptWithName(user.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optUserAgent, err := GetOptWithName(userAgent)
+	optUserAgent, err := GetOptWithName(userAgent.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
 
 	// Get Options for Command Config
-	optHelp, err := GetOptWithName(help)
+	optHelp, err := GetOptWithName(help.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optFail, err := GetOptWithName(fail)
+	optFail, err := GetOptWithName(fail.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optInclude, err := GetOptWithName(include)
+	optInclude, err := GetOptWithName(include.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optOutput, err := GetOptWithName(output)
+	optOutput, err := GetOptWithName(output.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optRemoteName, err := GetOptWithName(remoteName)
+	optRemoteName, err := GetOptWithName(remoteName.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optSilent, err := GetOptWithName(silent)
+	optSilent, err := GetOptWithName(silent.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optVerbose, err := GetOptWithName(verbose)
+	optVerbose, err := GetOptWithName(verbose.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil
 	}
-	optVersion, err := GetOptWithName(version)
+	optVersion, err := GetOptWithName(version.Name)
 	if err != nil {
 		log.Fatal(err)
 		return nil

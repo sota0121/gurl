@@ -67,7 +67,7 @@ func (v OptValue) Int() int {
 // Opt is the container for the option.
 type Opt struct {
 	Name      OptNameType
-	ShortHand string
+	ShortHand OptNameType
 	Help      string
 	Usage     string
 	Required  bool
@@ -110,29 +110,35 @@ func (o OptNameType) String() string {
 	return string(o)
 }
 
+// OptName is the type of the option name group.
+type OptName struct {
+	Name      OptNameType
+	ShortHand OptNameType
+}
+
 // Option Names definition
-const (
-	request    OptNameType = "request"
-	form       OptNameType = "form"
-	data       OptNameType = "data"
-	fail       OptNameType = "fail"
-	help       OptNameType = "help"
-	include    OptNameType = "include"
-	output     OptNameType = "output"
-	remoteName OptNameType = "remote-name"
-	silent     OptNameType = "silent"
-	uploadFile OptNameType = "upload-file"
-	user       OptNameType = "user"
-	userAgent  OptNameType = "user-agent"
-	verbose    OptNameType = "verbose"
-	version    OptNameType = "version"
+var (
+	request    = OptName{Name: "request", ShortHand: "X"}
+	form       = OptName{Name: "form", ShortHand: "F"}
+	data       = OptName{Name: "data", ShortHand: "d"}
+	fail       = OptName{Name: "fail", ShortHand: "f"}
+	help       = OptName{Name: "help", ShortHand: "h"}
+	include    = OptName{Name: "include", ShortHand: "i"}
+	output     = OptName{Name: "output", ShortHand: "o"}
+	remoteName = OptName{Name: "remote-name", ShortHand: "O"}
+	silent     = OptName{Name: "silent", ShortHand: "s"}
+	uploadFile = OptName{Name: "upload-file", ShortHand: "T"}
+	user       = OptName{Name: "user", ShortHand: "u"}
+	userAgent  = OptName{Name: "user-agent", ShortHand: "A"}
+	verbose    = OptName{Name: "verbose", ShortHand: "v"}
+	version    = OptName{Name: "version", ShortHand: "V"}
 )
 
 // options is the slice of the options.
 var options = []Opt{
 	{
-		Name:      request,
-		ShortHand: "-X",
+		Name:      request.Name,
+		ShortHand: request.ShortHand,
 		Help:      "Specify request method to use",
 		Usage:     "--request <method>",
 		Required:  false,
@@ -140,8 +146,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      form,
-		ShortHand: "-F",
+		Name:      form.Name,
+		ShortHand: form.ShortHand,
 		Help:      "Specify multipart MIME data",
 		Usage:     "--form <name=content>",
 		Required:  false,
@@ -149,8 +155,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      data,
-		ShortHand: "-d",
+		Name:      data.Name,
+		ShortHand: data.ShortHand,
 		Help:      "HTTP POST data",
 		Usage:     "--data <data>",
 		Required:  false,
@@ -158,8 +164,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      fail,
-		ShortHand: "-f",
+		Name:      fail.Name,
+		ShortHand: fail.ShortHand,
 		Help:      "Fail silently (no output at all) on HTTP errors",
 		Usage:     "--fail",
 		Required:  false,
@@ -167,8 +173,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      help,
-		ShortHand: "-h",
+		Name:      help.Name,
+		ShortHand: help.ShortHand,
 		Help:      "Show this help message and exit",
 		Usage:     "--help <category>",
 		Required:  false,
@@ -176,8 +182,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      include,
-		ShortHand: "-i",
+		Name:      include.Name,
+		ShortHand: include.ShortHand,
 		Help:      "Include protocol headers in the output (H/F)",
 		Usage:     "--include",
 		Required:  false,
@@ -185,8 +191,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      output,
-		ShortHand: "-o",
+		Name:      output.Name,
+		ShortHand: output.ShortHand,
 		Help:      "Write to <file> instead of stdout",
 		Usage:     "--output <file>",
 		Required:  false,
@@ -194,8 +200,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      remoteName,
-		ShortHand: "-O",
+		Name:      remoteName.Name,
+		ShortHand: remoteName.ShortHand,
 		Help:      "Write output to a file named as the remote file",
 		Usage:     "--remote-name",
 		Required:  false,
@@ -203,8 +209,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      silent,
-		ShortHand: "-s",
+		Name:      silent.Name,
+		ShortHand: silent.ShortHand,
 		Help:      "Silent mode (don't output anything)",
 		Usage:     "--silent",
 		Required:  false,
@@ -212,8 +218,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      uploadFile,
-		ShortHand: "-T",
+		Name:      uploadFile.Name,
+		ShortHand: uploadFile.ShortHand,
 		Help:      "Transfer local FILE to destination",
 		Usage:     "--upload-file <file>",
 		Required:  false,
@@ -221,8 +227,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      user,
-		ShortHand: "-u",
+		Name:      user.Name,
+		ShortHand: user.ShortHand,
 		Help:      "Server user and password",
 		Usage:     "--user <user:password>",
 		Required:  false,
@@ -230,8 +236,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      userAgent,
-		ShortHand: "-A",
+		Name:      userAgent.Name,
+		ShortHand: userAgent.ShortHand,
 		Help:      "User-Agent to send to server",
 		Usage:     "--user-agent <name>",
 		Required:  false,
@@ -239,8 +245,8 @@ var options = []Opt{
 		Value:     *NewOptValue(String),
 	},
 	{
-		Name:      verbose,
-		ShortHand: "-v",
+		Name:      verbose.Name,
+		ShortHand: verbose.ShortHand,
 		Help:      "Make the operation more talkative",
 		Usage:     "--verbose",
 		Required:  false,
@@ -248,8 +254,8 @@ var options = []Opt{
 		Value:     *NewOptValue(Bool),
 	},
 	{
-		Name:      version,
-		ShortHand: "-V",
+		Name:      version.Name,
+		ShortHand: version.ShortHand,
 		Help:      "Show version number and quit",
 		Usage:     "--version",
 		Required:  false,
@@ -268,10 +274,13 @@ func ParserInit() {
 		// In order to update array elements, we need to use the index.
 		if opt.Value.GetType() == String {
 			flag.StringVar(&options[i].Value.strValue, opt.Name.String(), "", opt.GetLineToPrint())
+			flag.StringVar(&options[i].Value.strValue, opt.ShortHand.String(), "", opt.GetLineToPrint())
 		} else if opt.Value.GetType() == Bool {
 			flag.BoolVar(&options[i].Value.boolValue, opt.Name.String(), false, opt.GetLineToPrint())
+			flag.BoolVar(&options[i].Value.boolValue, opt.ShortHand.String(), false, opt.GetLineToPrint())
 		} else if opt.Value.GetType() == Int {
 			flag.IntVar(&options[i].Value.intValue, opt.Name.String(), 0, opt.GetLineToPrint())
+			flag.IntVar(&options[i].Value.intValue, opt.ShortHand.String(), 0, opt.GetLineToPrint())
 		}
 	}
 	flag.Parse()
