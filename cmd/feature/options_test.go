@@ -59,7 +59,7 @@ func TestOpt(t *testing.T) {
 func testNewOpt(t *testing.T) {
 	// string value pattern
 	v := Opt{
-		Name:      data,
+		Name:      data.Name,
 		Help:      "help",
 		Usage:     "usage",
 		Required:  false,
