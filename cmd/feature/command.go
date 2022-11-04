@@ -150,26 +150,45 @@ func NewCommand() *GurlCommand {
 	}
 	url := positionalArgs[0]
 
+	// Create Request Context
+	ctx := NewReqContext(
+		optRequest.Value.String(),
+		optForm.Value.String(),
+		optData.Value.String(),
+		optUploadFile.Value.String(),
+		optUser.Value.String(),
+		optUserAgent.Value.String())
+	if ctx == nil {
+		log.Fatal("failed to create request context")
+		return nil
+	}
+
+	// Create Command Config
+	cfg := NewCmdConfig(
+		optHelp.Value.Bool(),
+		optFail.Value.Bool(),
+		optInclude.Value.Bool(),
+		optRemoteName.Value.Bool(),
+		optSilent.Value.Bool(),
+		optVerbose.Value.Bool(),
+		optVersion.Value.Bool(),
+		optOutput.Value.String())
+	if cfg == nil {
+		log.Fatal("failed to create command config")
+		return nil
+	}
+
+	// Create Gurl Client
+	client := NewGurlClient()
+	if client == nil {
+		log.Fatal("failed to create gurl client")
+		return nil
+	}
+
 	return &GurlCommand{
-		ctx: NewReqContext(
-			optRequest.Value.String(),
-			optForm.Value.String(),
-			optData.Value.String(),
-			optUploadFile.Value.String(),
-			optUser.Value.String(),
-			optUserAgent.Value.String(),
-		),
-		cfg: NewCmdConfig(
-			optHelp.Value.Bool(),
-			optFail.Value.Bool(),
-			optInclude.Value.Bool(),
-			optRemoteName.Value.Bool(),
-			optSilent.Value.Bool(),
-			optVerbose.Value.Bool(),
-			optVersion.Value.Bool(),
-			optOutput.Value.String(),
-		),
-		client: NewGurlClient(),
+		ctx:    ctx,
+		cfg:    cfg,
+		client: client,
 		usage:  "Usage: gurl [options...] <url>",
 		url:    url,
 	}

@@ -1,6 +1,7 @@
 package feature
 
 import (
+	"log"
 	"net/http"
 )
 
@@ -35,6 +36,7 @@ func NewReqContext(
 
 	// Check if the request method is supported.
 	if !isMethodSupported(optRequest) {
+		log.Fatal("Unsupported request method: ", optRequest)
 		return nil
 	}
 
