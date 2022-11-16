@@ -1,4 +1,4 @@
-package cmd
+package feature
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Test Suite for the package cmd.OptValue
+// Test Suite for the package feature.OptValue
 func TestOptValue(t *testing.T) {
 	testMap := map[string]func(t *testing.T){
 		"New OptValue Instance": testNewOptValue,
@@ -24,28 +24,25 @@ func testNewOptValue(t *testing.T) {
 	v := NewOptValue(String)
 	v.strValue = "test"
 	require.Equal(t, String, v.GetType())
-	s, err := v.String()
-	require.NoError(t, err)
+	s := v.String()
 	require.Equal(t, "test", s)
 
 	// bool value pattern
 	v = NewOptValue(Bool)
 	v.boolValue = true
 	require.Equal(t, Bool, v.GetType())
-	b, err := v.Bool()
-	require.NoError(t, err)
+	b := v.Bool()
 	require.Equal(t, true, b)
 
 	// int value pattern
 	v = NewOptValue(Int)
 	v.intValue = 123
 	require.Equal(t, Int, v.GetType())
-	i, err := v.Int()
-	require.NoError(t, err)
+	i := v.Int()
 	require.Equal(t, 123, i)
 }
 
-// Test Suite for the package cmd.Opt
+// Test Suite for the package feature.Opt
 func TestOpt(t *testing.T) {
 	testMap := map[string]func(t *testing.T){
 		"New Opt Instance":        testNewOpt,
@@ -62,14 +59,14 @@ func TestOpt(t *testing.T) {
 func testNewOpt(t *testing.T) {
 	// string value pattern
 	v := Opt{
-		Name:      data,
+		Name:      data.Name,
 		Help:      "help",
 		Usage:     "usage",
 		Required:  false,
 		Supported: true,
 		Value:     *NewOptValue(String),
 	}
-	require.Equal(t, data, v.Name)
+	require.Equal(t, data.Name, v.Name)
 }
 
 func testConstantOptionsAccess(t *testing.T) {
@@ -92,4 +89,13 @@ func testConstantOptionsAccess(t *testing.T) {
 	}
 	_, err = GetOptWithName("not-exist")
 	require.Error(t, err)
+
+	supportedOptSize := GetSupportedOptSize()
+	supportedOptions := []Opt{}
+	for _, opt := range options {
+		if opt.Supported {
+			supportedOptions = append(supportedOptions, opt)
+		}
+	}
+	require.Equal(t, len(supportedOptions), supportedOptSize)
 }

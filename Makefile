@@ -11,7 +11,7 @@ GO_VET		= $(GO) vet
 GO_FMT		= $(GO) fmt
 GO_GENERATE	= $(GO) generate
 
-MAIN_GO		= main.go
+MAIN_GO		= cmd/main.go
 BIN_NAME	= bin/gurl
 OUT_DIR		= out/
 COVER_DIR	= $(OUT_DIR)cover/
@@ -29,7 +29,7 @@ clean:
 # Test
 test:
 	@mkdir -p $(COVER_DIR)
-	$(GO_TEST) -cover ./... -coverprofile=$(COVER_FILE)
+	$(GO_TEST) -cover ./... -coverprofile=$(COVER_FILE) -v
 	$(GO_TOOL) cover -html=$(COVER_FILE) -o $(COVER_HTML)
 
 # Lint
