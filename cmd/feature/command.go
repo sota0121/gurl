@@ -89,7 +89,8 @@ func (c *GurlCommand) Execute() error {
 		defer f.Close()
 
 		for _, result := range results {
-			_, err = f.WriteString(result)
+			line := fmt.Sprintf("%s\n", result)
+			_, err = f.WriteString(line)
 			if err != nil {
 				logger.Println(c.cfg.verbose, "Failed to write file: ", c.cfg.output)
 				return err

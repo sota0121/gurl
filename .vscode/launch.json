@@ -25,11 +25,11 @@
             "args": [
                 "-v",
                 "-X",
+                "GET",
                 "-d",
                 "Sample Data In String",
                 "--output",
                 "google.html",
-                "GET",
                 "https://google.com",
             ]
         }
