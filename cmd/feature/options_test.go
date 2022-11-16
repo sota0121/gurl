@@ -66,7 +66,7 @@ func testNewOpt(t *testing.T) {
 		Supported: true,
 		Value:     *NewOptValue(String),
 	}
-	require.Equal(t, data, v.Name)
+	require.Equal(t, data.Name, v.Name)
 }
 
 func testConstantOptionsAccess(t *testing.T) {
